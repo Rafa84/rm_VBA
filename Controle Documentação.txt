@@ -1,0 +1,68 @@
+Sub verificacao()
+Dim pos As String
+Rows(1).Insert
+Columns("A:A").Select
+    Selection.Replace What:="-", Replacement:="", LookAt:=xlPart, _
+        SearchOrder:=xlByRows, MatchCase:=False, SearchFormat:=False, _
+        ReplaceFormat:=False
+Columns("A:A").Select
+    Selection.TextToColumns Destination:=Range("A1"), DataType:=xlFixedWidth, _
+        FieldInfo:=Array(Array(0, 1), Array(8, 1)), TrailingMinusNumbers:=True
+Cells(1, 1).Value = "Código"
+Cells(1, 2).Value = "Descrição"
+Cells(1, 3).Value = "Revisão Engenharia"
+Cells(1, 4).Value = "Tipo"
+Dim tipo As Range
+Dim coltipo As Range
+Set coltipo = Columns(4)
+For i = 2 To 11000
+Cells(i, 1).NumberFormat = "00"".""####"
+Cells(i, 4) = Right(Cells(i, 2).Value, 3)
+pos = InStr(1, Cells(i, 2), "REV")
+If Cells(i, 2) Like "*" & "REV " & "*" Then
+Cells(i, 3).Value = Trim(Mid(Cells(i, 2), pos + 3, 2))
+End If
+pos1 = InStr(1, Cells(i, 2), "_")
+If Cells(i, 2) Like "*" & "_*" & ".*" Then
+Cells(i, 3).Value = Trim(Mid(Cells(i, 2), pos1 + 1, 1))
+End If
+For Each cell In Columns(1)
+If Cells(i, 1).Value <> "" Then
+If Cells(i, 4).Value <> "pdf" Then
+Rows(i).Delete
+Rows(i).Insert
+Rows(i).Interior.ColorIndex = 0
+End If
+If Cells(i, 1).Value <> "" Then
+If Cells(i, 1).Value = Cells(i - 1, 1).Value Then
+If Cells(i, 2).Value = Cells(i - 1, 2).Value Then
+If Cells(i, 3).Value >= Cells(i - 1, 3).Value Then
+Rows(i).Interior.ColorIndex = 4
+End If
+End If
+End If
+End If
+End If
+Next
+Next
+Columns(1).Select
+Selection.SpecialCells(xlCellTypeBlanks).Select
+Selection.EntireRow.Delete
+Columns("D").Delete
+Cells(1, 4).Value = "Revisão Intranet"
+Cells(1, 5).Value = "Status"
+Columns("A:G").AutoFit
+Set f1 = Sheets("Intranet")
+Set f2 = Sheets("Controle")
+For a = 2 To 11000
+If f2.Cells(a, 1).Value = f1.Cells(a, 1).Value Then
+f1.Cells(a, 2).Select
+    Selection.Copy
+f2.Cells(a, 4).Paste
+End If
+If f2.Cells(a, 4).Value = "" Then
+f2.Cells(a, 4).Value = "-"
+End If
+Next
+
+End Sub

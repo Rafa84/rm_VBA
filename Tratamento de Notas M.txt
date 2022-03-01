@@ -1,0 +1,138 @@
+Sub Atualizar_Notas()
+
+Dim pmae_base As Worksheet
+Dim pmae_dados As Worksheet
+Dim pfilha As Worksheet
+
+MsgBox (ActiveWorkbook.Name)
+
+Set pmae_base = ActiveWorkbook.Worksheets("Base")
+Set pmae_dados = ActiveWorkbook.Worksheets("Dados")
+
+On Error GoTo ERRO
+Set SapGuiAuto = GetObject("SAPGUI")  'Get the SAP GUI Scripting object
+Set SAPApp = SapGuiAuto.GetScriptingEngine 'Get the currently running SAP GUI
+Set SAPCon = SAPApp.Children(0) 'Get the first system that is currently connected
+Set session = SAPCon.Children(0) 'Get the first session (window) on that connection
+
+On Error GoTo 0
+Application.ScreenUpdating = False
+
+session.findById("wnd[0]").maximize
+session.findById("wnd[0]/tbar[0]/okcd").Text = "/niw29"
+session.findById("wnd[0]").sendVKey 0
+session.findById("wnd[0]/usr/ctxtQMART-LOW").showContextMenu
+session.findById("wnd[0]/usr").selectContextMenuItem "&019"
+session.findById("wnd[1]/usr/cntlMY_TOOLBAR_CONTAINER/shellcont/shell").pressButton "EXCL"
+session.findById("wnd[1]/usr/cntlOPTION_CONTAINER/shellcont/shell").selectedRows = "0"
+session.findById("wnd[1]/usr/cntlOPTION_CONTAINER/shellcont/shell").doubleClickCurrentCell
+session.findById("wnd[0]/usr/ctxtQMART-LOW").Text = "M4"
+session.findById("wnd[0]/usr/ctxtDATUV").Text = "01.01.2020"
+session.findById("wnd[0]/usr/ctxtDATUB").Text = "31.12.9999"
+session.findById("wnd[0]/usr/ctxtIWERK-LOW").Text = "GO02"
+session.findById("wnd[0]/usr/ctxtINGRP-LOW").Text = "831"
+session.findById("wnd[0]/usr/ctxtVARIANT").Text = "/RMIRANDA"
+session.findById("wnd[0]/tbar[1]/btn[8]").press
+session.findById("wnd[0]/usr/cntlGRID1/shellcont/shell").currentCellRow = -1
+session.findById("wnd[0]/usr/cntlGRID1/shellcont/shell").selectColumn "QMNUM"
+session.findById("wnd[0]/tbar[1]/btn[41]").press
+session.findById("wnd[0]/tbar[1]/btn[16]").press
+session.findById("wnd[1]/tbar[0]/btn[0]").press
+session.findById("wnd[1]/usr/subSUBSCREEN_STEPLOOP:SAPLSPO5:0150/sub:SAPLSPO5:0150/radSPOPLI-SELFLAG[0,0]").Select
+session.findById("wnd[1]/usr/subSUBSCREEN_STEPLOOP:SAPLSPO5:0150/sub:SAPLSPO5:0150/radSPOPLI-SELFLAG[0,0]").SetFocus
+session.findById("wnd[1]/tbar[0]/btn[0]").press
+session.findById("wnd[1]/tbar[0]/btn[0]").press
+
+'Ordenando a tabela gerada pelo SAP'
+
+Set pfilha = ActiveWorkbook.Worksheets("Plan1")
+
+pfilha.Sort.SortFields.Clear
+    pfilha.Sort.SortFields.Add Key:=Range("A1"), _
+        SortOn:=xlSortOnValues, Order:=xlAscending, DataOption:= _
+        xlSortTextAsNumbers
+    With pfilha.Sort
+        .SetRange Range("A:L")
+        .Header = xlYes
+        .MatchCase = False
+        .Orientation = xlTopToBottom
+        .SortMethod = xlPinYin
+        .Apply
+    End With
+
+'Convertendo as notas para numeros'
+    Dim LastRow
+    Dim rngCelula As Range
+    LastRow = pfilha.Cells(Rows.Count, 1).End(xlUp).Row
+    Set rngCelula = Range("A2" & ":" & "B" & LastRow)
+      With rngCelula
+        .NumberFormat = "General"
+        .FormulaLocal = rngCelula.Value
+      End With
+      
+      Set rngCelula = Range("I2" & ":" & "I" & LastRow)
+      With rngCelula
+        .NumberFormat = "General"
+        .FormulaLocal = rngCelula.Value
+      End With
+
+'Comparação das notas'
+
+LastRow = pfilha.Cells(Rows.Count, 1).End(xlUp).Row
+Dim lastcol
+lastcol = pfilha.Cells(1, Columns.Count).End(xlToLeft).Column
+Dim note_i, note_r As Integer
+note_i = 0
+note_r = 0
+Dim i As Integer
+For i = 1 To LastRow
+pfilha.Activate
+   If pfilha.Range("A" & i) = pmae_base.Range("A" & i) Then
+            Else
+                If pfilha.Range("A" & i) > pmae_base.Range("A" & i) And Not IsEmpty(pmae_base.Range("A" & i).Value) Then
+                    pmae_base.Range("A" & i).EntireRow.Delete
+                    i = i - 1
+                    note_r = note_r + 1
+                Else
+                    pmae_base.Activate
+                    Range("A" & i).EntireRow.Insert
+                    pfilha.Activate
+                    Range("A" & i).EntireRow.Copy
+                    pmae_base.Activate
+                    Range("A" & i).Select
+                    Range("A" & i).PasteSpecial xlPasteValues
+                    pfilha.Activate
+                    i = i - 1
+                    note_i = note_i + 1
+                End If
+    End If
+pfilha.Activate
+Next
+  
+
+'Ajustando a data'
+
+pmae_base.Activate
+Range("F2" & ":" & "G" & LastRow).Select
+      Selection.Replace What:=".", Replacement:="/", LookAt:=xlPart, _
+        SearchOrder:=xlByRows, MatchCase:=False, SearchFormat:=False, _
+        ReplaceFormat:=False
+
+'Fechando o SAP'
+
+session.findById("wnd[1]/tbar[0]/btn[0]").press
+session.findById("wnd[0]").maximize
+session.findById("wnd[0]/tbar[0]/btn[12]").press
+session.findById("wnd[0]/tbar[0]/btn[12]").press
+
+'Finalizando'
+
+MsgBox "Foram encontradas " & note_i & " notas novas; foram removidas " & note_r & ".", vbInformation, "Notas para análise"
+GoTo FIM
+
+ERRO:
+MsgBox ("Favor abrir o SAP e logar no K6P")
+
+FIM:
+End Sub
+

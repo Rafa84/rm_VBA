@@ -1,0 +1,702 @@
+Private Sub Abertura_Initialize()
+
+End Sub
+
+Private Sub Image1_Click()
+ActiveSheet.Pictures.Insert ("Y:\Engenharia EAS\Estrutura\Modelagem\DRU\Lista de Endereçamento\Aplicativo LE\Logo EAS.jpg")
+End Sub
+
+Private Sub Aprovador_Change()
+
+End Sub
+
+Private Sub Bloco_Change()
+
+
+End Sub
+
+Private Sub Casco_Change()
+
+End Sub
+
+Private Sub Executor_Change()
+
+
+End Sub
+
+Private Sub Gerar_Click()
+Dim Executor, Verificador, Aprovador, Casco, Bloco, logo As String
+Dim i, n As Integer
+Casco = Abertura.Casco
+Bloco = Abertura.Bloco
+Verificador = Abertura.Verificador
+Executor = Abertura.Executor
+Aprovador = Abertura.Aprovador
+
+'Casco = InputBox("Casco", Casco, "")
+'If Casco = vbNullString Then Exit Sub
+'bloco = InputBox("Bloco", bloco, "")
+'If bloco = vbNullString Then Exit Sub
+'Executor = InputBox("Nome do Executor", Executor, "")
+'If Executor = vbNullString Then Exit Sub
+'verificador = InputBox("Nome do Verificador", verificador, "")
+'If verificador = vbNullString Then Exit Sub
+'aprovador = InputBox("Nome do Aprovador", aprovador, "")
+'If aprovador = vbNullString Then Exit Sub
+Sheets.Add before:=Sheets(Sheets.Count)
+ActiveSheet.Name = "Legenda"
+Set wsDest = ActiveWorkbook.ActiveSheet
+Range("A1:D46").Interior.Color = RGB(255, 255, 255)
+Range("A1:D46").Font.Name = "Calibri"
+Range("B29:D29").Select
+With Selection
+        .HorizontalAlignment = xlCenter
+        .VerticalAlignment = xlCenter
+        .WrapText = False
+        .Orientation = 0
+        .AddIndent = False
+        .IndentLevel = 0
+        .ShrinkToFit = False
+        .ReadingOrder = xlContext
+        .MergeCells = False
+    End With
+Selection.Merge
+Range("B29") = "n = número sequencial (1,2,3,...)"
+Range("B31:D31").Select
+With Selection
+        .HorizontalAlignment = xlCenter
+        .VerticalAlignment = xlCenter
+        .WrapText = False
+        .Orientation = 0
+        .AddIndent = False
+        .IndentLevel = 0
+        .ShrinkToFit = False
+        .ReadingOrder = xlContext
+        .MergeCells = False
+    End With
+Selection.Merge
+Range("B31") = "ANDAMENTO"
+Range("B31").Font.FontStyle = "Bold"
+Range("A32:A39").Select
+With Selection
+        .HorizontalAlignment = xlCenter
+        .VerticalAlignment = xlCenter
+        .WrapText = False
+        .Orientation = 0
+        .AddIndent = False
+        .IndentLevel = 0
+        .ShrinkToFit = False
+        .ReadingOrder = xlContext
+        .MergeCells = False
+    End With
+Selection.Merge
+Range("A32") = "Chapeamento e peças"
+Range("A40:A46").Select
+With Selection
+        .HorizontalAlignment = xlCenter
+        .VerticalAlignment = xlCenter
+        .WrapText = False
+        .Orientation = 0
+        .AddIndent = False
+        .IndentLevel = 0
+        .ShrinkToFit = False
+        .ReadingOrder = xlContext
+        .MergeCells = False
+    End With
+Selection.Merge
+Range("A40") = "Perfilados Frabricados ou Laminados"
+Range("A32,A40,B26:D28,B31").Font.FontStyle = "Bold"
+Range("B32:B36").Select
+With Selection
+        .HorizontalAlignment = xlCenter
+        .VerticalAlignment = xlCenter
+        .WrapText = False
+        .Orientation = 0
+        .AddIndent = False
+        .IndentLevel = 0
+        .ShrinkToFit = False
+        .ReadingOrder = xlContext
+        .MergeCells = False
+    End With
+Selection.Merge
+Range("B32") = "Reto"
+Range("B37:B39").Select
+With Selection
+        .HorizontalAlignment = xlCenter
+        .VerticalAlignment = xlCenter
+        .WrapText = False
+        .Orientation = 0
+        .AddIndent = False
+        .IndentLevel = 0
+        .ShrinkToFit = False
+        .ReadingOrder = xlContext
+        .MergeCells = False
+    End With
+Selection.Merge
+Range("B37") = "Curvo"
+Range("B40:B43").Select
+With Selection
+        .HorizontalAlignment = xlCenter
+        .VerticalAlignment = xlCenter
+        .WrapText = False
+        .Orientation = 0
+        .AddIndent = False
+        .IndentLevel = 0
+        .ShrinkToFit = False
+        .ReadingOrder = xlContext
+        .MergeCells = False
+    End With
+Selection.Merge
+Range("B40") = "Reto"
+Range("B44:B46").Select
+With Selection
+        .HorizontalAlignment = xlCenter
+        .VerticalAlignment = xlCenter
+        .WrapText = False
+        .Orientation = 0
+        .AddIndent = False
+        .IndentLevel = 0
+        .ShrinkToFit = False
+        .ReadingOrder = xlContext
+        .MergeCells = False
+    End With
+Selection.Merge
+Range("B44") = "Curvo"
+Range("C32,C40") = "RM"
+Range("C33,C41") = "RE"
+Range("C34,C43") = "RS"
+Range("C35") = "PU"
+Range("C36") = "PA"
+Range("C37,C44") = "CM"
+Range("C38,C45") = "CE"
+Range("C39,C46") = "CS"
+Range("C42") = "RP"
+Range("D32") = "Reto para Montagem"
+Range("D33") = "Reto para Blocos Especiais"
+Range("D34") = "Reto para Submontagem"
+Range("D35") = "Painel para Submontagem"
+Range("D36") = "Painelização"
+Range("D37") = "Cruvo para Montagem"
+Range("D38") = "Curvo para Especial"
+Range("D39") = "Curvo para Submontagem"
+Range("D40") = "Perfil Reto para Montagem"
+Range("D41") = "Perfil Reto para Blocos Especiais"
+Range("D42") = "Perfil Reto para Painel"
+Range("D43") = "Perfil Reto para Submontagem"
+Range("D44") = "Perfil Curvo para Montagem"
+Range("D45") = "Perfil Curvo para Blocos Especiais"
+Range("D46") = "Perfil Curvo para Submontagem"
+Range("B14:D14,B15:D15,B16:D16,B17:D17,B18:D18,B22:D22,B23:D23,B24:D24").Select
+With Selection
+        .HorizontalAlignment = xlLeft
+        .VerticalAlignment = xlCenter
+        .WrapText = False
+        .Orientation = 0
+        .AddIndent = False
+        .IndentLevel = 0
+        .ShrinkToFit = False
+        .ReadingOrder = xlContext
+        .MergeCells = False
+    End With
+Selection.Merge
+Range("B13:D13,B21:D21").Select
+With Selection
+        .HorizontalAlignment = xlCenter
+        .VerticalAlignment = xlCenter
+        .WrapText = False
+        .Orientation = 0
+        .AddIndent = False
+        .IndentLevel = 0
+        .ShrinkToFit = False
+        .ReadingOrder = xlContext
+        .MergeCells = False
+    End With
+Selection.Merge
+Range("C26:D26,C27:D27,C28:D28").Select
+With Selection
+        .HorizontalAlignment = xlLeft
+        .VerticalAlignment = xlCenter
+        .WrapText = False
+        .Orientation = 0
+        .AddIndent = False
+        .IndentLevel = 0
+        .ShrinkToFit = False
+        .ReadingOrder = xlContext
+        .MergeCells = False
+    End With
+Selection.Merge
+Range("A13,A14,A15,A16,A17,A18,B13,B14,B15,B16,B17,B18,A21,B21,A22,A23,A24").HorizontalAlignment = xlCenter
+Range("A2") = "1"
+Range("A3") = "Codificação de Sub-Bloco"
+Range("A26") = "2"
+Range("A27") = "3"
+Range("A28") = "4"
+Range("A31") = "5"
+Range("A12") = "*1)"
+Range("A13") = "Código"
+Range("A14") = "D"
+Range("A15") = "G"
+Range("A16") = "S"
+Range("A17") = "T"
+Range("A18") = "L"
+Range("B13") = "Aplicação"
+Range("B14") = "Convés, Fundo Chato, Teto Duplo-Fundo"
+Range("B15") = "Bojo"
+Range("B16") = "Chapeamento do casco (exceto para 'G')"
+Range("B17") = "Seção Transversal (exceto para 'D,G,S')"
+Range("B18") = "Seção Longitudinal (exceto para 'D,G,S')"
+Range("A20") = "*2)"
+Range("A21") = "Código"
+Range("A22") = "A,M,F"
+Range("A23") = "L,M,U"
+Range("A24") = "A,B,C,D..."
+Range("B21") = "Aplicação"
+Range("B22") = "Quando dividido na direção longitudinal (A= RÉ, M= MEIO, F= VANTE)"
+Range("B23") = "Quando dividido na direção vertical (L= INFERIOR, M= MEIO, U= SUPERIOR)"
+Range("B24") = "Quando dividido da direção interna à externa ou se não puder ser classificado como acima."
+Range("B26") = "Submontagem:"
+Range("c26") = "Xn"
+Range("B27") = "Sub Submontagem:"
+Range("C27") = "Yn"
+Range("B28") = "Painelização:"
+Range("C28") = "Pn"
+Range("D7") = "(Código de Boreste ou Bombordo)"
+Range("D9") = "(Código auxiliar *2)"
+Range("D11") = "(Código auxiliar *1)"
+Range("A13:D18,A21:D24,A32:C46").Borders.LineStyle = 1
+Range("A5:C5,B31").Select
+With Selection
+        .Borders.LineStyle = 1
+        .Borders.Weight = xlMedium
+    End With
+Range("A1:D1,B26:D26").Select
+    With Selection
+        .Borders(xlEdgeTop).LineStyle = 1
+        .Borders(xlEdgeTop).Weight = xlMedium
+    End With
+Range("D1:D46").Select
+    With Selection
+        .Borders(xlEdgeRight).LineStyle = 1
+        .Borders(xlEdgeRight).Weight = xlMedium
+    End With
+Range("A46:D46,B29:D29,A39:D39").Select
+    With Selection
+        .Borders(xlEdgeBottom).LineStyle = 1
+        .Borders(xlEdgeBottom).Weight = xlMedium
+    End With
+Range("A1:A46,B29").Select
+    With Selection
+        .Borders(xlEdgeLeft).LineStyle = 1
+        .Borders(xlEdgeLeft).Weight = xlMedium
+    End With
+Range("D36,D43").Borders(xlEdgeBottom).LineStyle = 1
+Range("A2,A26,A27,A28,A31").Select
+With Selection
+    .Interior.Color = RGB(83, 141, 213)
+    .Font.Color = RGB(255, 255, 255)
+    .Borders.LineStyle = 1
+    .Borders.Weight = xlMedium
+    .HorizontalAlignment = xlCenter
+    .Font.FontStyle = "bold"
+End With
+Range("C32:C38,C40:C45").Select
+With Selection
+    .Interior.Color = RGB(83, 141, 213)
+    .Font.Color = RGB(255, 255, 255)
+    .Borders.LineStyle = 1
+    .HorizontalAlignment = xlCenter
+    .Font.FontStyle = "bold"
+End With
+Range("C39,C46").Select
+With Selection
+    .Interior.Color = RGB(83, 141, 213)
+    .Font.Color = RGB(255, 255, 255)
+    .Borders.LineStyle = 1
+    .Borders(xlEdgeBottom).Weight = xlMedium
+    .HorizontalAlignment = xlCenter
+    .Font.FontStyle = "bold"
+End With
+
+Range("B:B").Select
+ActiveCell.ColumnWidth = 40
+Range("D:D").Select
+ActiveCell.ColumnWidth = 35
+Worksheets("Legenda").Range("A40").Columns.AutoFit
+Dim w As Worksheet
+Set w = ActiveSheet
+w.Shapes.AddLine(100, 80, 100, 162).Select
+With Selection.ShapeRange.Line
+        .Visible = msoTrue
+        .Weight = 1.5
+        .ForeColor.ObjectThemeColor = msoThemeColorText1
+    End With
+w.Shapes.AddLine(100, 162, 440, 162).Select
+With Selection.ShapeRange.Line
+        .Visible = msoTrue
+        .Weight = 1.5
+        .ForeColor.ObjectThemeColor = msoThemeColorText1
+    End With
+
+w.Shapes.AddLine(300, 80, 300, 132).Select
+With Selection.ShapeRange.Line
+        .Visible = msoTrue
+        .Weight = 1.5
+        .ForeColor.ObjectThemeColor = msoThemeColorText1
+    End With
+w.Shapes.AddLine(300, 132, 440, 132).Select
+With Selection.ShapeRange.Line
+        .Visible = msoTrue
+        .Weight = 1.5
+        .ForeColor.ObjectThemeColor = msoThemeColorText1
+    End With
+w.Shapes.AddLine(410, 80, 410, 102).Select
+With Selection.ShapeRange.Line
+        .Visible = msoTrue
+        .Weight = 1.5
+        .ForeColor.ObjectThemeColor = msoThemeColorText1
+    End With
+w.Shapes.AddLine(410, 102, 440, 102).Select
+With Selection.ShapeRange.Line
+        .Visible = msoTrue
+        .Weight = 1.5
+        .ForeColor.ObjectThemeColor = msoThemeColorText1
+    End With
+
+'--------------------------------------------------------------
+
+Sheets.Add before:=Sheets(Sheets.Count)
+ActiveSheet.Name = "Chapas"
+Set wsDest = ActiveWorkbook.ActiveSheet
+Range("J1") = "Data:"
+Range("K1") = Date
+Range("J2") = "Exec.:"
+Range("J3") = "Verif.:"
+Range("J4") = "Aprov.:"
+Range("K2").Value = Executor
+Range("K3").Value = Verificador
+Range("K4").Value = Aprovador
+Dim cell As Range
+Range("A1:K4").Select
+    For Each cell In Selection
+        cell = UCase(cell)
+        Casco = UCase(Casco)
+        Bloco = UCase(Bloco)
+    Next
+Range("B1:I2").Select
+With Selection
+        .HorizontalAlignment = xlCenter
+        .VerticalAlignment = xlCenter
+        .WrapText = False
+        .Orientation = 0
+        .AddIndent = False
+        .IndentLevel = 0
+        .ShrinkToFit = False
+        .ReadingOrder = xlContext
+        .MergeCells = False
+    End With
+Selection.Merge
+Range("B1") = "LISTA DE ENDEREÇAMENTO " + Casco + "-000-SU-LE-" + Bloco + "-00-001"
+Range("A1:A4").Select
+With Selection
+        .HorizontalAlignment = xlCenter
+        .VerticalAlignment = xlCenter
+        .WrapText = False
+        .Orientation = 0
+        .AddIndent = False
+        .IndentLevel = 0
+        .ShrinkToFit = False
+        .ReadingOrder = xlContext
+        .MergeCells = False
+    End With
+Selection.Merge
+Range("B3:I3").Select
+With Selection
+        .HorizontalAlignment = xlCenter
+        .VerticalAlignment = xlCenter
+        .WrapText = False
+        .Orientation = 0
+        .AddIndent = False
+        .IndentLevel = 0
+        .ShrinkToFit = False
+        .ReadingOrder = xlContext
+        .MergeCells = False
+    End With
+Selection.Merge
+Range("B3") = "EAS HULL: " + Casco + "  - DRILLING RIG UNIT"
+Range("B4:I4").Select
+With Selection
+        .HorizontalAlignment = xlCenter
+        .VerticalAlignment = xlCenter
+        .WrapText = False
+        .Orientation = 0
+        .AddIndent = False
+        .IndentLevel = 0
+        .ShrinkToFit = False
+        .ReadingOrder = xlContext
+        .MergeCells = False
+    End With
+Selection.Merge
+Range("A5") = "0"
+Range("B5") = "1"
+Range("C5") = "2"
+Range("D5") = "3"
+Range("E5") = "4"
+Range("F5") = "5"
+Range("G5") = "6"
+Range("H5") = "7"
+Range("I5") = "8"
+Range("J5") = "9"
+Range("K5") = "10"
+Range("A5:K5,E6:F6,B8,A9:K9").Interior.Color = RGB(191, 191, 191)
+Range("E6") = "Xn"
+Range("F6") = "Yn"
+Range("B8:H8").Select
+With Selection
+        .HorizontalAlignment = xlCenter
+        .VerticalAlignment = xlCenter
+        .WrapText = False
+        .Orientation = 0
+        .AddIndent = False
+        .IndentLevel = 0
+        .ShrinkToFit = False
+        .ReadingOrder = xlContext
+        .MergeCells = False
+    End With
+Selection.Merge
+Range("B8") = "Tag da Peça (ESCREVER)"
+Range("I8:K8").Select
+With Selection
+        .HorizontalAlignment = xlCenter
+        .VerticalAlignment = xlCenter
+        .WrapText = False
+        .Orientation = 0
+        .AddIndent = False
+        .IndentLevel = 0
+        .ShrinkToFit = False
+        .ReadingOrder = xlContext
+        .MergeCells = False
+    End With
+Selection.Merge
+Range("I8") = "Informação adicional"
+Range("A9") = "Item Remontowa"
+Range("B9") = "Casco"
+Range("C9") = "Bloco"
+Range("D9") = "Sub Bloco"
+Range("E9") = "Sub"
+Range("F9") = "Ssub"
+Range("G9") = "Item EAS"
+Range("H9") = "Andamento"
+Range("I9") = "Espessura"
+Range("J9") = "Perfil"
+Range("K9") = "PC"
+Range("A1:K5").Borders.LineStyle = 1
+Range("A1:K5").Borders.Weight = xlHairline
+Range("E6:F6").Borders.LineStyle = 1
+Range("E6:F6").Borders.Weight = xlHairline
+Range("B8:K8").Borders.LineStyle = 1
+Range("B8:K8").Borders.Weight = xlHairline
+Range("A9:K9").Borders.LineStyle = 1
+Range("A9:K9").Borders.Weight = xlHairline
+Range("A1:K9").Select
+With Selection
+        .HorizontalAlignment = xlCenter
+        .Font.FontStyle = "bold"
+        .Font.Name = "arial"
+        .Font.Size = 10
+    End With
+Range("A6:D7,A8,E7:F7,G6:K7").Interior.Color = RGB(255, 255, 255)
+Range("A6:A8").Borders(xlEdgeLeft).LineStyle = 1
+Range("K6:K7").Borders(xlEdgeRight).LineStyle = 1
+Worksheets("Chapas").Columns("A:K").AutoFit
+Range("A1").Select
+logo = Range("A1")
+ActiveSheet.Pictures.Insert("Y:\Engenharia EAS\Estrutura\Modelagem\DRU\Lista de Endereçamento\Aplicativo LE\Logo EAS.jpg").Select
+With Selection
+.Left = Range("A1").Left
+.Top = Range("A1").Top
+.ShapeRange.LockAspectRatio = msoFalse
+.ShapeRange.Height = 60#
+.ShapeRange.Width = 85#
+.ShapeRange.Rotation = 0#
+End With
+Range("B4") = ActiveSheet.Name
+ActiveWorkbook.Sheets("Chapas").Copy _
+       after:=ActiveWorkbook.Sheets("Chapas")
+ActiveSheet.Name = "Perfis Retos"
+Range("B4") = ActiveSheet.Name
+ActiveWorkbook.Sheets("Perfis Retos").Copy _
+       after:=ActiveWorkbook.Sheets("Perfis Retos")
+ActiveSheet.Name = "Perfis Curvos"
+Range("B4") = ActiveSheet.Name
+Sheets.Add before:=Sheets(Sheets.Count)
+ActiveSheet.Name = "limpeza"
+Dim filename As String
+Const caminho = "Y:\Engenharia EAS\Estrutura\Modelagem\DRU\Lista de Endereçamento\Report Nupas\"
+filename = caminho & Bloco & "list"
+Range("A1").Select
+With ActiveSheet.QueryTables.Add(Connection:="TEXT;" & filename, Destination:=Range("$A$1"))
+        .TextFileParseType = xlDelimited
+        .TextFileOtherDelimiter = "|"
+        .TextFileColumnDataTypes = Array(9, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1)
+        .TextFileDecimalSeparator = "."
+        .TextFileThousandsSeparator = ","
+        .TextFileTrailingMinusNumbers = True
+        .Refresh BackgroundQuery:=True
+End With
+For Each cell In [a:a]
+    If cell = "0" Then
+        cell.EntireRow.Delete
+    End If
+Next
+Columns("B").Insert
+Range("B1") = "Casco"
+Range("B2", Range("A1").End(xlDown).Offset(0, 1)).Select
+    With Selection
+        .Cells.Value = Casco
+    End With
+startrange = "A1"
+Range(startrange, Range(startrange).End(xlDown).End(xlToRight)).Select
+    With Selection
+        .HorizontalAlignment = xlCenter
+For Each cell In Selection
+cell.Value = Trim(cell.Value)
+Next cell
+    End With
+    For Each cell In [d:f]
+            If cell.Value = "0" Then cell.Clear
+            Next cell
+Range("A1:K1").AutoFilter field:=10, Criteria1:="="
+Range("A2", Range("J2").End(xlDown)).Select
+    With Selection
+        .Copy Destination:=Sheets("Chapas").Range("A10")
+    End With
+Worksheets("limpeza").Activate
+Range("A1").AutoFilter
+Range("A1:K1").AutoFilter field:=10, Criteria1:="<>"
+Range("A1:K1").AutoFilter field:=8, Criteria1:="R*"
+Range("J2", Range("A2").End(xlDown)).Select
+    With Selection
+        .Copy Destination:=Sheets("Perfis Retos").Range("A10")
+    End With
+Worksheets("limpeza").Activate
+Range("A1").AutoFilter
+Range("A1:K1").AutoFilter field:=10, Criteria1:="<>"
+Range("A1:K1").AutoFilter field:=8, Criteria1:="C*"
+Range("J2", Range("A2").End(xlDown)).Select
+    With Selection
+        .Copy Destination:=Sheets("Perfis Curvos").Range("A10")
+    End With
+
+Worksheets("Chapas").Activate
+Range("K10", Range("A10").End(xlDown)).Select
+With Selection
+        .Borders.LineStyle = 1
+        .Borders.Weight = xlHairline
+    End With
+Range("A:K").Columns.AutoFit
+Worksheets("Perfis Retos").Activate
+Range("K10", Range("A10").End(xlDown)).Select
+With Selection
+        .Borders.LineStyle = 1
+        .Borders.Weight = xlHairline
+    End With
+    Range("A:K").Columns.AutoFit
+Worksheets("Perfis Curvos").Activate
+Range("K10", Range("A10").End(xlDown)).Select
+With Selection
+        .Borders.LineStyle = 1
+        .Borders.Weight = xlHairline
+    End With
+Range("A:K").Columns.AutoFit
+
+Dim plan As Worksheet
+    For Each plan In Worksheets
+        Application.DisplayAlerts = False
+            Select Case plan.Name
+                Case "Legenda"
+                Case "Chapas"
+                Case "Perfis Retos"
+                Case "Perfis Curvos"
+                Case Else
+                    plan.Delete
+            End Select
+        Next
+    Application.DisplayAlerts = False
+Worksheets("Legenda").Activate
+ActiveWindow.View = xlPageBreakPreview
+ActiveSheet.VPageBreaks(1).DragOff xlToRight, 1
+ActiveWindow.View = xlNormalView
+Worksheets("Chapas").Activate
+ActiveSheet.PageSetup.PrintArea = Range("K1", Range("A1").End(xlDown))
+With ActiveSheet.PageSetup
+    .PrintTitleRows = "$1:$9"
+    .PrintTitleColumns = ""
+    .PrintQuality = 600
+    .Orientation = xlPortrait
+    .PaperSize = xlPaperA4
+End With
+ActiveWindow.View = xlPageBreakPreview
+ActiveSheet.VPageBreaks(1).DragOff xlToRight, 1
+ActiveWindow.View = xlNormalView
+Worksheets("Perfis Retos").Activate
+ActiveSheet.PageSetup.PrintArea = Range("K1", Range("A1").End(xlDown))
+With ActiveSheet.PageSetup
+    .PrintTitleRows = "$1:$9"
+    .PrintTitleColumns = ""
+    .PrintQuality = 600
+    .Orientation = xlPortrait
+    .PaperSize = xlPaperA4
+End With
+ActiveWindow.View = xlPageBreakPreview
+ActiveSheet.VPageBreaks(1).DragOff xlToRight, 1
+ActiveWindow.View = xlNormalView
+Worksheets("Perfis Curvos").Activate
+ActiveSheet.PageSetup.PrintArea = Range("K1", Range("A1").End(xlDown))
+With ActiveSheet.PageSetup
+    .PrintTitleRows = "$1:$9"
+    .PrintTitleColumns = ""
+    .PrintQuality = 600
+    .Orientation = xlPortrait
+    .PaperSize = xlPaperA4
+End With
+ActiveWindow.View = xlPageBreakPreview
+ActiveSheet.VPageBreaks(1).DragOff xlToRight, 1
+ActiveWindow.View = xlNormalView
+namefile = Casco + "-000-SU-LE-" + Bloco + "-00-001"
+ActiveWorkbook.SaveAs filename:="Y:\Engenharia EAS\Estrutura\Modelagem\DRU\Lista de Endereçamento\Listas\" & namefile & ".xlsx", FileFormat:=xlOpenXMLWorkbook
+ActiveWorkbook.ExportAsFixedFormat xlTypePDF, "Y:\Engenharia EAS\Estrutura\Modelagem\DRU\Lista de Endereçamento\Listas\" & namefile & ".pdf"
+Application.Quit
+Shell "explorer.exe Y:\Engenharia EAS\Estrutura\Modelagem\DRU\Lista de Endereçamento\Listas\", vbMaximizedFocus
+
+End Sub
+
+Private Sub Label8_Click()
+Dim appOutlook As Object
+    Dim Mail As Object
+    
+    'Verifica se Outlook está aberto. Caso não esteja, criar nova instância
+    On Error Resume Next
+    Set appOutlook = GetObject(, "Outlook.Application")
+    If appOutlook Is Nothing Then
+        Set appOutlook = CreateObject("Outlook.Application")
+    End If
+    On Error GoTo 0
+    
+    Set Mail = appOutlook.CreateItem(0) '0 é um item de e-mail
+    
+    With Mail
+        .To = "rafael.miranda@easbr.com"
+        .Subject = "Melhorias/Duvidas"
+        .Body = ""
+        .Display
+    End With
+
+End Sub
+
+Private Sub Sair_Click()
+Application.Quit
+End Sub
+
+Private Sub Verificador_Change()
+
+End Sub
